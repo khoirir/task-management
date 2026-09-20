@@ -48,6 +48,7 @@ task-management/
 │   ├── auth/                       # Authentication module (Register, Login, JWT)
 │   │   ├── dto.go                  # Request/Response data transfer objects
 │   │   ├── handler.go              # Gin HTTP handlers
+│   │   ├── handler_test.go         # Unit tests for HTTP handlers
 │   │   ├── repository.go           # Database operations interface & implementation
 │   │   ├── service.go              # Business logic & JWT signing
 │   │   └── service_test.go         # Unit tests with mock repository
@@ -58,7 +59,9 @@ task-management/
 │   │   └── service.go
 │   ├── task/                       # Task management module (Upcoming)
 │   ├── middleware/                 # Shared middlewares (Auth JWT, CORS, Logger)
-│   ├── response/                   # Standardized JSON response envelope
+│   ├── response/                   # Standardized JSON response envelope & validation formatter
+│   │   ├── response.go
+│   │   └── validator.go
 │   └── database/                   # Database connection pool (pgxpool)
 │       ├── postgres.go
 │       └── db/                     # Auto-generated code by sqlc (DO NOT EDIT)
@@ -91,7 +94,7 @@ task-management/
 - [x] User Login with JWT token generation
 - [x] Standardized API JSON response envelope
 - [x] Graceful shutdown handling
-- [x] Unit test suite for Auth Service (100% Mock-driven)
+- [x] Unit test suite for Auth Service & Handler (100% Mock-driven)
 - [ ] JWT Authentication Middleware
 - [ ] CRUD Project (Create, List, Detail, Update, Delete)
 - [ ] CRUD Task (Title, Description, Status, Due Date, Priority)
