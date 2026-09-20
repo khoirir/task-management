@@ -71,6 +71,32 @@ func TestRegister_Success(t *testing.T) {
 	mockRepo.AssertExpectations(t)
 }
 
+func TestRegister_CreateUserError(t *testing.T) {
+	mockRepo := new(MockRepository)
+	service := NewService(mockRepo, testJWTSecret)
+
+	req := RegisterRequest{
+		Name:     "Test User",
+		Email:    "test@example.com",
+		Password: "password123",
+	}
+
+	mockRepo.On("GetUserByEmail", mock.Anything, req.Email).
+		Return(db.User{}, errors.New("user not found"))
+
+	mockRepo.On("CreateUser", mock.Anything, mock.MatchedBy(func(arg db.CreateUserParams) bool {
+		return arg.Name == req.Name && arg.Email == req.Email
+	})).Return(db.User{}, errors.New("database error"))
+
+	res, err := service.Register(context.Background(), req)
+
+	assert.Error(t, err)
+	assert.Nil(t, res)
+	assert.Contains(t, err.Error(), "Failed to create user")
+	mockRepo.AssertExpectations(t)
+}
+
+
 func TestRegister_EmailAlreadyExists(t *testing.T) {
 	mockRepo := new(MockRepository)
 	service := NewService(mockRepo, testJWTSecret)

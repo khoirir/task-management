@@ -147,7 +147,7 @@ func TestHandler_Register_ValidationError(t *testing.T) {
 	mockService.AssertNotCalled(t, "Register")
 }
 
-func TesHandler_Register_ServiceError(t *testing.T) {
+func TestHandler_Register_ServiceError(t *testing.T) {
 	mockService := new(MockService)
 	router, _ := setupTestRouter(mockService)
 

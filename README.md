@@ -50,6 +50,7 @@ task-management/
 │   │   ├── handler.go              # Gin HTTP handlers
 │   │   ├── handler_test.go         # Unit tests for HTTP handlers
 │   │   ├── repository.go           # Database operations interface & implementation
+│   │   ├── repository_test.go      # Unit tests for database repository with pgxmock
 │   │   ├── service.go              # Business logic & JWT signing
 │   │   └── service_test.go         # Unit tests with mock repository
 │   ├── project/                    # Project management module (Upcoming)
@@ -94,7 +95,7 @@ task-management/
 - [x] User Login with JWT token generation
 - [x] Standardized API JSON response envelope
 - [x] Graceful shutdown handling
-- [x] Unit test suite for Auth Service & Handler (100% Mock-driven)
+- [x] Unit test suite for Auth Service, Handler, & Repository (100% Mock-driven, 94%+ coverage)
 - [ ] JWT Authentication Middleware
 - [ ] CRUD Project (Create, List, Detail, Update, Delete)
 - [ ] CRUD Task (Title, Description, Status, Due Date, Priority)
