@@ -60,6 +60,8 @@ task-management/
 │   │   └── service.go
 │   ├── task/                       # Task management module (Upcoming)
 │   ├── middleware/                 # Shared middlewares (Auth JWT, CORS, Logger)
+│   │   ├── auth.go                 # JWT authentication middleware
+│   │   └── auth_test.go            # Unit tests for JWT auth middleware
 │   ├── response/                   # Standardized JSON response envelope & validation formatter
 │   │   ├── response.go
 │   │   └── validator.go
@@ -96,7 +98,7 @@ task-management/
 - [x] Standardized API JSON response envelope
 - [x] Graceful shutdown handling
 - [x] Unit test suite for Auth Service, Handler, & Repository (100% Mock-driven, 94%+ coverage)
-- [ ] JWT Authentication Middleware
+- [x] JWT Authentication Middleware
 - [ ] CRUD Project (Create, List, Detail, Update, Delete)
 - [ ] CRUD Task (Title, Description, Status, Due Date, Priority)
 
