@@ -188,7 +188,7 @@ erDiagram
 
 ### 1. Clone & Setup Environment
 ```bash
-git clone git@github.com:khoirir/task-management.git
+git clone git@github.com:khoirirrosikin/task-management.git
 cd task-management
 ```
 
@@ -260,8 +260,8 @@ go test -cover ./internal/auth
 - **Request Body:**
 ```json
 {
-  "name": "Khoirir",
-  "email": "khoirir@example.com",
+  "name": "Khoirir Rosikin",
+  "email": "khoirir.rosikin@gmail.com",
   "password": "secretpassword123"
 }
 ```
@@ -274,8 +274,8 @@ go test -cover ./internal/auth
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
     "user": {
       "id": "26d367a0-c964-4958-a9c5-9c2ad422ff8e",
-      "name": "Khoirir",
-      "email": "khoirir@example.com",
+      "name": "Khoirir Rosikin",
+      "email": "khoirir.rosikin@gmail.com",
       "created_at": "2026-09-19T22:37:40.507475+07:00"
     }
   }
@@ -287,7 +287,7 @@ go test -cover ./internal/auth
 - **Request Body:**
 ```json
 {
-  "email": "khoirir@example.com",
+  "email": "khoirir.rosikin@gmail.com",
   "password": "secretpassword123"
 }
 ```
@@ -300,8 +300,8 @@ go test -cover ./internal/auth
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
     "user": {
       "id": "26d367a0-c964-4958-a9c5-9c2ad422ff8e",
-      "name": "Khoirir",
-      "email": "khoirir@example.com",
+      "name": "Khoirir Rosikin",
+      "email": "khoirir.rosikin@gmail.com",
       "created_at": "2026-09-19T22:37:40.507475+07:00"
     }
   }

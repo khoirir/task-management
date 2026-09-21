@@ -12,9 +12,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"github.com/khoirir/task-management/internal/auth"
-	"github.com/khoirir/task-management/internal/database"
-	"github.com/khoirir/task-management/internal/database/db"
+	"github.com/khoirirrosikin/task-management/internal/auth"
+	"github.com/khoirirrosikin/task-management/internal/database"
+	"github.com/khoirirrosikin/task-management/internal/database/db"
 )
 
 func main() {

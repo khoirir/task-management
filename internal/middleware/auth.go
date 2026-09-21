@@ -7,8 +7,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/khoirir/task-management/internal/auth"
-	"github.com/khoirir/task-management/internal/response"
+	"github.com/khoirirrosikin/task-management/internal/auth"
+	"github.com/khoirirrosikin/task-management/internal/response"
 )
 
 func AuthMiddleware(jwtSecret string) gin.HandlerFunc {

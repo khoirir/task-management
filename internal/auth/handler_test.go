@@ -11,7 +11,7 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	"github.com/khoirir/task-management/internal/response"
+	"github.com/khoirirrosikin/task-management/internal/response"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
