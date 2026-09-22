@@ -32,7 +32,7 @@ func (h *Handler) Register(c *gin.Context) {
 
 	res, err := h.service.Register(c.Request.Context(), req)
 	if err != nil {
-		response.Error(c, http.StatusBadRequest, err.Error(), nil)
+		response.HandleError(c, err)
 		return
 	}
 
@@ -48,7 +48,7 @@ func (h *Handler) Login(c *gin.Context) {
 
 	res, err := h.service.Login(c.Request.Context(), req)
 	if err != nil {
-		response.Error(c, http.StatusUnauthorized, err.Error(), nil)
+		response.HandleError(c, err)
 		return
 	}
 

@@ -53,18 +53,20 @@ task-management/
 │   │   ├── repository_test.go      # Unit tests for database repository with pgxmock
 │   │   ├── service.go              # Business logic & JWT signing
 │   │   └── service_test.go         # Unit tests with mock repository
-│   ├── project/                    # Project management module (Upcoming)
-│   │   ├── dto.go
-│   │   ├── handler.go
-│   │   ├── repository.go
-│   │   └── service.go
+│   ├── project/                    # Project management module
+│   │   ├── dto.go                  # Request/Response data transfer objects
+│   │   ├── handler.go              # Gin HTTP handlers
+│   │   ├── repository.go           # Database operations interface & implementation
+│   │   ├── service.go              # Business logic & authorization checks
+│   │   └── service_test.go         # Unit tests with mock repository
 │   ├── task/                       # Task management module (Upcoming)
 │   ├── middleware/                 # Shared middlewares (Auth JWT, CORS, Logger)
 │   │   ├── auth.go                 # JWT authentication middleware
 │   │   └── auth_test.go            # Unit tests for JWT auth middleware
-│   ├── response/                   # Standardized JSON response envelope & validation formatter
-│   │   ├── response.go
-│   │   └── validator.go
+│   ├── response/                   # Standardized JSON response envelope & centralized error handling
+│   │   ├── error.go                # Custom AppError and centralized HandleError
+│   │   ├── response.go             # Success and Error response builders
+│   │   └── validator.go            # Validation error formatter
 │   └── database/                   # Database connection pool (pgxpool)
 │       ├── postgres.go
 │       └── db/                     # Auto-generated code by sqlc (DO NOT EDIT)
@@ -99,7 +101,8 @@ task-management/
 - [x] Graceful shutdown handling
 - [x] Unit test suite for Auth Service, Handler, & Repository (100% Mock-driven, 94%+ coverage)
 - [x] JWT Authentication Middleware
-- [ ] CRUD Project (Create, List, Detail, Update, Delete)
+- [x] Centralized AppError & Error Handling
+- [x] CRUD Project (Create, List, Detail, Update, Delete)
 - [ ] CRUD Task (Title, Description, Status, Due Date, Priority)
 
 ### Phase 2 — Collaboration & RBAC
@@ -305,6 +308,109 @@ go test -cover ./internal/auth
       "created_at": "2026-09-19T22:37:40.507475+07:00"
     }
   }
+}
+```
+
+### Create Project
+- **Endpoint:** `POST /api/v1/projects`
+- **Headers:** `Authorization: Bearer <token>`
+- **Request Body:**
+```json
+{
+  "name": "Task Management API",
+  "description": "Backend API built with Go and PostgreSQL"
+}
+```
+- **Response:** `201 Created`
+```json
+{
+  "success": true,
+  "message": "Project created successfully",
+  "data": {
+    "id": "c1f7a012-6874-4ec5-b286-d24eef6ff2aa",
+    "name": "Task Management API",
+    "description": "Backend API built with Go and PostgreSQL",
+    "owner_id": "26d367a0-c964-4958-a9c5-9c2ad422ff8e",
+    "created_at": "2026-09-22T08:00:00Z",
+    "updated_at": "2026-09-22T08:00:00Z"
+  }
+}
+```
+
+### List Projects
+- **Endpoint:** `GET /api/v1/projects`
+- **Headers:** `Authorization: Bearer <token>`
+- **Response:** `200 OK`
+```json
+{
+  "success": true,
+  "message": "Projects retrieved successfully",
+  "data": [
+    {
+      "id": "c1f7a012-6874-4ec5-b286-d24eef6ff2aa",
+      "name": "Task Management API",
+      "description": "Backend API built with Go and PostgreSQL",
+      "owner_id": "26d367a0-c964-4958-a9c5-9c2ad422ff8e",
+      "created_at": "2026-09-22T08:00:00Z",
+      "updated_at": "2026-09-22T08:00:00Z"
+    }
+  ]
+}
+```
+
+### Get Project Details
+- **Endpoint:** `GET /api/v1/projects/:id`
+- **Headers:** `Authorization: Bearer <token>`
+- **Response:** `200 OK`
+```json
+{
+  "success": true,
+  "message": "Project retrieved successfully",
+  "data": {
+    "id": "c1f7a012-6874-4ec5-b286-d24eef6ff2aa",
+    "name": "Task Management API",
+    "description": "Backend API built with Go and PostgreSQL",
+    "owner_id": "26d367a0-c964-4958-a9c5-9c2ad422ff8e",
+    "created_at": "2026-09-22T08:00:00Z",
+    "updated_at": "2026-09-22T08:00:00Z"
+  }
+}
+```
+
+### Update Project
+- **Endpoint:** `PUT /api/v1/projects/:id`
+- **Headers:** `Authorization: Bearer <token>`
+- **Request Body:**
+```json
+{
+  "name": "Updated Project Name",
+  "description": "Updated project description"
+}
+```
+- **Response:** `200 OK`
+```json
+{
+  "success": true,
+  "message": "Project updated successfully",
+  "data": {
+    "id": "c1f7a012-6874-4ec5-b286-d24eef6ff2aa",
+    "name": "Updated Project Name",
+    "description": "Updated project description",
+    "owner_id": "26d367a0-c964-4958-a9c5-9c2ad422ff8e",
+    "created_at": "2026-09-22T08:00:00Z",
+    "updated_at": "2026-09-22T08:30:00Z"
+  }
+}
+```
+
+### Delete Project
+- **Endpoint:** `DELETE /api/v1/projects/:id`
+- **Headers:** `Authorization: Bearer <token>`
+- **Response:** `200 OK`
+```json
+{
+  "success": true,
+  "message": "Project deleted successfully"
 }
 ```
 

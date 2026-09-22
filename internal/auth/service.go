@@ -2,13 +2,13 @@ package auth
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 	"github.com/khoirirrosikin/task-management/internal/database/db"
+	"github.com/khoirirrosikin/task-management/internal/response"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -38,7 +38,7 @@ type JWTClaims struct {
 func (s *service) Register(ctx context.Context, req RegisterRequest) (*AuthResponse, error) {
 	_, err := s.repo.GetUserByEmail(ctx, req.Email)
 	if err == nil {
-		return nil, errors.New("Email already exists")
+		return nil, response.ErrBadRequest("Email already exists")
 	}
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
@@ -75,12 +75,12 @@ func (s *service) Register(ctx context.Context, req RegisterRequest) (*AuthRespo
 func (s *service) Login(ctx context.Context, req LoginRequest) (*AuthResponse, error) {
 	user, err := s.repo.GetUserByEmail(ctx, req.Email)
 	if err != nil {
-		return nil, errors.New("Email or password is wrong")
+		return nil, response.ErrUnauthorized("Email or password is wrong")
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(req.Password))
 	if err != nil {
-		return nil, errors.New("Email or password is wrong")
+		return nil, response.ErrUnauthorized("Email or password is wrong")
 	}
 
 	token, err := s.generateToken(user.ID, user.Email)

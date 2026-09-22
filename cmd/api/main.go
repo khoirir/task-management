@@ -15,6 +15,8 @@ import (
 	"github.com/khoirirrosikin/task-management/internal/auth"
 	"github.com/khoirirrosikin/task-management/internal/database"
 	"github.com/khoirirrosikin/task-management/internal/database/db"
+	"github.com/khoirirrosikin/task-management/internal/middleware"
+	"github.com/khoirirrosikin/task-management/internal/project"
 )
 
 func main() {
@@ -41,6 +43,12 @@ func main() {
 	authService := auth.NewService(authRepo, jwtSecret)
 	authHandler := auth.NewHandler(authService)
 
+	projectRepo := project.NewRepository(queries)
+	projectService := project.NewService(projectRepo)
+	projectHandler := project.NewHandler(projectService)
+
+	authMiddleware := middleware.AuthMiddleware(jwtSecret)
+
 	router := gin.Default()
 
 	router.GET("/health", func(c *gin.Context) {
@@ -49,6 +57,7 @@ func main() {
 
 	v1 := router.Group("/api/v1")
 	authHandler.RegisterRoutes(v1)
+	projectHandler.RegisterRoutes(v1, authMiddleware)
 
 	srv := &http.Server{
 		Addr: ":" + port,

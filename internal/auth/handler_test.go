@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"errors"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -158,7 +157,7 @@ func TestHandler_Register_ServiceError(t *testing.T) {
 	}
 
 	mockService.On("Register", mock.Anything, reqBody).
-		Return(nil, errors.New("Email already exists"))
+		Return(nil, response.ErrBadRequest("Email already exists"))
 
 	w := performRequest(router, http.MethodPost, "/api/v1/auth/register", reqBody)
 
@@ -255,7 +254,7 @@ func TestHandler_Login_ServiceError(t *testing.T) {
 	}
 
 	mockService.On("Login", mock.Anything, reqBody).
-		Return(nil, errors.New("Email or password is wrong"))
+		Return(nil, response.ErrUnauthorized("Email or password is wrong"))
 
 	w := performRequest(router, http.MethodPost, "/api/v1/auth/login", reqBody)
 
