@@ -56,7 +56,9 @@ task-management/
 │   ├── project/                    # Project management module
 │   │   ├── dto.go                  # Request/Response data transfer objects
 │   │   ├── handler.go              # Gin HTTP handlers
+│   │   ├── handler_test.go         # Unit tests for HTTP handlers
 │   │   ├── repository.go           # Database operations interface & implementation
+│   │   ├── repository_test.go      # Unit tests for database repository with pgxmock
 │   │   ├── service.go              # Business logic & authorization checks
 │   │   └── service_test.go         # Unit tests with mock repository
 │   ├── task/                       # Task management module (Upcoming)
@@ -100,6 +102,7 @@ task-management/
 - [x] Standardized API JSON response envelope
 - [x] Graceful shutdown handling
 - [x] Unit test suite for Auth Service, Handler, & Repository (100% Mock-driven, 94%+ coverage)
+- [x] Unit test suite for Project Service, Handler, & Repository (100% Mock-driven, 81%+ coverage)
 - [x] JWT Authentication Middleware
 - [x] Centralized AppError & Error Handling
 - [x] CRUD Project (Create, List, Detail, Update, Delete)
@@ -234,14 +237,16 @@ Run all unit tests across modules:
 go test -v ./...
 ```
 
-Run unit tests for the `auth` module specifically:
+Run unit tests for specific modules:
 ```bash
 go test -v ./internal/auth
+go test -v ./internal/project
 ```
 
 Check test code coverage:
 ```bash
 go test -cover ./internal/auth
+go test -cover ./internal/project
 ```
 
 ---
